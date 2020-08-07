@@ -6,77 +6,115 @@ money = 550
 
 
 def buy_coffee():
-    print("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:")
-    choice = int(input())
-    if choice == 1:
-        print(f"""
-The coffee machine has:
-{water - 250} of water
-{milk} of milk
-{coffee_beans - 16} of coffee beans
-{cups - 1} of disposable cups
-{money + 4} of money""")
-    elif choice == 2:
-        print(f"""
-The coffee machine has:
-{water - 350} of water
-{milk - 75} of milk
-{coffee_beans - 20} of coffee beans
-{cups - 1} of disposable cups
-{money + 7} of money""")
-    elif choice == 3:
-        print(f"""
-The coffee machine has:
-{water - 200} of water
-{milk - 100} of milk
-{coffee_beans - 12} of coffee beans
-{cups - 1} of disposable cups
-{money + 6} of money""")
+    global water
+    global milk
+    global coffee_beans
+    global cups
+    global money
+    print()
+    print("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:")
+    choice = input()
+    if choice.__eq__("back"):
+        return
+    elif int(choice) == 1:
+        if water - 250 < 0:
+            print("Sorry, not enough water!")
+        elif coffee_beans - 16 < 0:
+            print("Sorry, not enough coffee beans!")
+        elif cups - 1 < 0:
+            print("Sorry, not enough cups!")
+        else:
+            print("I have enough resources, making you a coffee!")
+            water -= 250
+            coffee_beans -= 16
+            cups -= 1
+            money += 4
+    elif int(choice) == 2:
+        if water - 350 < 0:
+            print("Sorry, not enough water!")
+        elif milk - 75 < 0:
+            print("Sorry, not enough milk!")
+        elif coffee_beans - 20 < 0:
+            print("Sorry, not enough coffee beans!")
+        elif cups - 1 < 0:
+            print("Sorry, not enough cups!")
+        else:
+            print("I have enough resources, making you a coffee!")
+            water -= 350
+            milk -= 75
+            coffee_beans -= 20
+            cups -= 1
+            money += 7
+    elif int(choice) == 3:
+        if water - 200 < 0:
+            print("Sorry, not enough water!")
+        elif milk - 100 < 0:
+            print("Sorry, not enough milk!")
+        elif coffee_beans - 12 < 0:
+            print("Sorry, not enough coffee beans!")
+        elif cups - 1 < 0:
+            print("Sorry, not enough cups!")
+        else:
+            print("I have enough resources, making you a coffee!")
+            water -= 200
+            milk -= 100
+            coffee_beans -= 12
+            cups -= 1
+            money += 6
+    print()
 
 
-def fill_coffee_machine(wtr, mlk, beans, cps, mn):
+def fill_coffee_machine():
+    global water
+    global milk
+    global coffee_beans
+    global cups
+    print()
     print("Write how many ml of water do you want to add:")
-    wtr += int(input())
+    water += int(input())
     print("Write how many ml of milk do you want to add:")
-    mlk += int(input())
+    milk += int(input())
     print("Write how many grams of coffee beans do you want to add:")
-    beans += int(input())
+    coffee_beans += int(input())
     print("Write how many disposable cups of coffee do you want to add:")
-    cps += int(input())
+    cups += int(input())
+    print()
+
+
+def take_money():
+    global money
+    print(f"""
+I gave you ${money}
+""")
+    money -= money
+
+
+def remaining():
+    global water
+    global milk
+    global coffee_beans
+    global cups
+    global money
     print(f"""
 The coffee machine has:
-{wtr} of water
-{mlk} of milk
-{beans} of coffee beans
-{cps} of disposable cups
-{mn} of money""")
-
-
-def take_money(wtr, mlk, beans, cps, mn):
-    print(f"I gave you ${mn}")
-    mn = 0
-    print(f"""
-The coffee machine has:
-{wtr} of water
-{mlk} of milk
-{beans} of coffee beans
-{cps} of disposable cups
-{mn} of money""")
-
-
-print(f"""The coffee machine has:
 {water} of water
 {milk} of milk
 {coffee_beans} of coffee beans
 {cups} of disposable cups
-{money} of money""")
+${money} of money
+""")
 
 
-print("Write action (buy, fill, take):")
-action = input()
-if action.__eq__("buy"):
-    buy_coffee()
-elif action.__eq__("fill"):
-    fill_coffee_machine(water, milk, coffee_beans, cups, money)
-elif action.__eq__("take"):
-    take_money(water, milk, coffee_beans, cups, money)
+while True:
+    print("Write action (buy, fill, take, remaining, exit):")
+    action = input()
+    if action.__eq__("buy"):
+        buy_coffee()
+    elif action.__eq__("fill"):
+        fill_coffee_machine()
+    elif action.__eq__("take"):
+        take_money()
+    elif action.__eq__("remaining"):
+        remaining()
+    elif action.__eq__("exit"):
+        break
